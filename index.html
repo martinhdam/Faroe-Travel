@@ -51,11 +51,18 @@
   .menu-btn{display:none;background:none;border:0;font-size:26px;cursor:pointer;color:var(--sea)}
 
   /* Hero */
-  .hero{position:relative;color:#fff;padding:90px 0 120px;overflow:hidden;background:var(--sea)}
-  .hero .bg{position:absolute;inset:0;background-size:cover;background-position:center 40%}
+  .hero{position:relative;color:#fff;padding:110px 0 70px;overflow:hidden;background:var(--sea);min-height:88vh;display:flex;align-items:center}
+  .hero > .wrap{width:100%}
+  .hero .bg{position:absolute;inset:-4%;background-size:cover;background-position:center 40%;animation:kenburns 26s ease-in-out infinite alternate}
+  @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.12) translate(-1.5%,-1%)}}
+  @media (prefers-reduced-motion:reduce){.hero .bg{animation:none}}
   .hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,28,40,.82),rgba(10,28,40,.25))}
   .hero .wrap{position:relative}
-  .hero h1{font-size:clamp(36px,6vw,64px);max-width:720px}
+  .hero h1{font-size:clamp(40px,7vw,78px);max-width:780px;text-shadow:0 4px 24px rgba(0,0,0,.35)}
+  .hero h1 em{font-style:italic;color:var(--accent-2)}
+  .stats{display:flex;gap:34px;flex-wrap:wrap;margin-top:34px}
+  .stats div b{display:block;font:700 30px Fraunces,serif;color:#fff}
+  .stats div span{font-size:13px;opacity:.8;text-transform:uppercase;letter-spacing:.08em}
   .hero p.lead{font-size:19px;max-width:560px;opacity:.92}
   .hero-points{display:flex;gap:22px;flex-wrap:wrap;margin:22px 0 0;padding:0;list-style:none;font-weight:500}
   .hero-points li::before{content:"✓ ";color:var(--accent-2)}
@@ -65,6 +72,24 @@
   select:focus,input:focus,textarea:focus{outline:none;border-color:var(--sea-2)}
   .search .btn{align-self:end;height:46px}
 
+  /* Mosaic */
+  .mosaic{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:210px;gap:14px}
+  .tile{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;background:var(--sea-2)}
+  .tile .ph{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .7s ease}
+  .tile:hover .ph{transform:scale(1.08)}
+  .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.65))}
+  .tile .cap{position:absolute;left:18px;right:18px;bottom:16px;z-index:2;color:#fff}
+  .tile .cap b{display:block;font:700 24px Fraunces,serif}
+  .tile .cap span{font-size:13.5px;opacity:.9}
+  .tile.big{grid-column:span 2;grid-row:span 2}
+  .tile.big .cap b{font-size:34px}
+  .tile.wide{grid-column:span 2}
+  @media (max-width:800px){.mosaic{grid-template-columns:1fr 1fr;grid-auto-rows:170px}.tile.big{grid-column:span 2;grid-row:span 2}.tile.wide{grid-column:span 2}}
+
+  /* Scroll reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
   /* Packages */
   .chips{display:flex;gap:8px;flex-wrap:wrap}
   .chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font:500 14px Inter;cursor:pointer;color:var(--ink-2)}
@@ -73,16 +98,21 @@
   .toolbar select{width:auto}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
   .card{background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s}
-  .card:hover{transform:translateY(-4px)}
-  .card .img{height:200px;background-size:cover;background-position:center;position:relative}
-  .card .img .badge{position:absolute;top:14px;left:14px;background:#fff;color:var(--sea);font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px}
-  .card .img .days{position:absolute;bottom:14px;right:14px;background:rgba(15,34,48,.8);color:#fff;font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px}
+  .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(15,34,48,.18)}
+  .card .img{height:240px;position:relative;overflow:hidden}
+  .card .img .ph{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s ease}
+  .card:hover .img .ph{transform:scale(1.07)}
+  .card .img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%);pointer-events:none}
+  .card .img .from{position:absolute;bottom:14px;left:14px;z-index:2;color:#fff;font:700 22px Fraunces,serif;text-shadow:0 2px 8px rgba(0,0,0,.4)}
+  .card .img .from small{display:block;font:600 11px Inter;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+  .card .img .badge{z-index:2;position:absolute;top:14px;left:14px;background:#fff;color:var(--sea);font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px}
+  .card .img .days{z-index:2;position:absolute;backdrop-filter:blur(4px);bottom:14px;right:14px;background:rgba(15,34,48,.8);color:#fff;font-size:13px;font-weight:600;padding:5px 10px;border-radius:999px}
   .card .body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
   .card h3{font-size:22px;margin:0}
   .card p{margin:0;color:var(--ink-2);font-size:15px}
   .includes{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0}
   .includes span{font-size:12.5px;background:var(--sand);padding:4px 9px;border-radius:8px;color:var(--ink-2)}
-  .card .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:end;padding-top:12px;border-top:1px solid var(--line)}
+  .card .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;border-top:1px solid var(--line)}
   .price small{display:block;font-size:12px;color:var(--muted)}
   .price strong{font:700 24px Fraunces,serif;color:var(--sea)}
   .empty{padding:40px;text-align:center;background:#fff;border-radius:var(--radius);color:var(--muted)}
@@ -90,7 +120,9 @@
   /* Experiences */
   .exp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
   .exp{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden}
-  .exp .pic{height:150px;background:var(--sea-2) center/cover;position:relative}
+  .exp .pic{height:170px;background:var(--sea-2) center/cover;position:relative;transition:transform .2s}
+  .exp{transition:transform .2s, box-shadow .2s}
+  .exp:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(15,34,48,.18)}
   .exp .pic .ico{position:absolute;left:14px;bottom:-20px;width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:22px;box-shadow:var(--shadow)}
   .exp .txt{padding:26px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
     .exp h3{font-size:18px;margin:4px 0 0}
@@ -145,7 +177,9 @@
   .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 
   /* Why */
-  .why{background:var(--moss);color:#fff}
+  .why{position:relative;color:#fff;background:var(--sea) center/cover;overflow:hidden}
+  .why::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(47,82,51,.92),rgba(20,56,79,.80))}
+  .why .wrap{position:relative}
   .why h2{color:#fff}
   .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:20px}
   .why-grid div{border-top:2px solid rgba(255,255,255,.35);padding-top:14px}
@@ -206,7 +240,7 @@
     .nav ul.open{display:flex}
     .menu-btn{display:block}
   }
-  @media (max-width:600px){ .nav-right .btn{display:none} }
+  @media (max-width:600px){ .nav-right .btn{display:none} .lang select{max-width:136px;font-size:13px;padding:6px 22px 6px 8px} .logo{font-size:18px} .hero{min-height:auto;padding:70px 0 50px} .stats{gap:20px} .stats div b{font-size:24px} .card .img{height:220px} }
   @media (max-width:1000px){
     .search{grid-template-columns:1fr 1fr}
     .search .btn{grid-column:1/-1}
@@ -233,6 +267,7 @@
       Faroe Travel
     </a>
     <ul id="menu">
+      <li><a href="#places" data-i18n="nav_places"></a></li>
       <li><a href="#packages" data-i18n="nav_packages"></a></li>
       <li><a href="#experiences" data-i18n="nav_experiences"></a></li>
       <li><a href="#builder" data-i18n="nav_builder"></a></li>
@@ -271,6 +306,23 @@
       <div class="field"><label for="qsBudget" data-i18n="qs_budget"></label><select id="qsBudget"></select></div>
       <button class="btn" type="submit" data-i18n="qs_btn"></button>
     </form>
+    <div class="stats">
+      <div><b>18</b><span data-i18n="st1"></span></div>
+      <div><b id="statTrips">21</b><span data-i18n="st2"></span></div>
+      <div><b>~2 h</b><span data-i18n="st3"></span></div>
+      <div><b>24/7</b><span data-i18n="st4"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section id="places" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="section-head">
+      <div><span class="eyebrow" data-i18n="pl_eyebrow"></span><h2 data-i18n="pl_title"></h2></div>
+      <p data-i18n="pl_text"></p>
+    </div>
+    <div class="mosaic" id="mosaic"></div>
   </div>
 </section>
 
@@ -363,7 +415,7 @@
 </section>
 
 <!-- WHY -->
-<section class="why">
+<section class="why" id="whySec">
   <div class="wrap">
     <span class="eyebrow" style="color:var(--accent-2)" data-i18n="why_eyebrow"></span>
     <h2 data-i18n="why_title"></h2>
@@ -542,7 +594,11 @@ const AUTO_LANGS = {
    ========================================================= */
 const T = {
   nav_packages:{en:"Packages",da:"Pakkerejser"},
+  pl_eyebrow:{en:"Where you'll go",da:"Her skal du hen"},
+  pl_title:{en:"Wild, green and close",da:"Vildt, grønt og tæt på"},
+  pl_text:{en:"Sheer cliffs, waterfalls, puffins and colourful villages — only two hours from Copenhagen. Tap a place to see matching trips.",da:"Stejle klipper, vandfald, lunder og farverige bygder – kun to timer fra København. Tryk på et sted for at se rejser."},
   nav_experiences:{en:"Experiences",da:"Oplevelser"},
+  nav_places:{en:"Places",da:"Steder"},
   nav_builder:{en:"Build your trip",da:"Byg din rejse"},
   nav_info:{en:"Getting around",da:"Transport"},
   nav_seasons:{en:"When to go",da:"Hvornår"},
@@ -551,7 +607,8 @@ const T = {
   cta_plan:{en:"Plan my trip",da:"Planlæg rejsen"},
 
   hero_eyebrow:{en:"Package holidays · planned by locals",da:"Pakkerejser · planlagt af lokale"},
-  hero_title:{en:"18 islands. One trip, sorted.",da:"18 øer. Én rejse – klaret."},
+  hero_title:{en:"18 islands. <em>One trip,</em> sorted.",da:"18 øer. <em>Én rejse</em> – klaret."},
+  st1:{en:"islands",da:"øer"}, st2:{en:"ready-made trips",da:"færdige rejser"}, st3:{en:"flight from Copenhagen",da:"fly fra København"}, st4:{en:"local help",da:"lokal hjælp"},
   hero_lead:{en:"Flights, a place to stay, a car or bus pass, and the experiences worth crossing the North Atlantic for — booked together, at one price.",
              da:"Fly, overnatning, bil eller buskort og de oplevelser, der er værd at krydse Nordatlanten for – samlet i én booking til én pris."},
   hp1:{en:"Flights from 9+ airports",da:"Fly fra 9+ lufthavne"},
@@ -1114,6 +1171,17 @@ const PACKAGES = [
 
 ];
 
+// Places shown in the photo mosaic. "filter" = which trip style to show when clicked.
+const PLACES = [
+  {photo:14308771, cls:"big",  name:"Gásadalur", text:{en:"The waterfall that falls straight into the ocean",da:"Vandfaldet, der styrter direkte i havet"}, filter:"drive"},
+  {photo:37310698, cls:"",     name:"Tórshavn",  text:{en:"One of the world's smallest capitals",da:"En af verdens mindste hovedstæder"}, filter:"city"},
+  {photo:2581847,  cls:"",     name:"Mykines",   text:{en:"Puffin island",da:"Lundeøen"}, filter:"nature"},
+  {photo:29156237, cls:"",     name:"Tjørnuvík", text:{en:"Black sand and sea stacks",da:"Sort sand og havstakke"}, filter:"nature"},
+  {photo:38771664, cls:"",     name:{en:"Grass-roof villages",da:"Bygder med græstag"}, text:{en:"Stay like a local",da:"Bo som en lokal"}, filter:"family"},
+  {photo:5124194,  cls:"wide", name:"Sandoy",    text:{en:"Dunes, beaches and quiet roads",da:"Klitter, strande og stille veje"}, filter:"culture"},
+  {photo:28933672, cls:"wide", name:{en:"Winter",da:"Vinter"}, text:{en:"Storms, snow and northern lights",da:"Storme, sne og nordlys"}, filter:"winter"}
+];
+
 const INFO = [
   {ico:"🚗", t:{en:"Rental car",da:"Lejebil"}, p:{en:"The most flexible way to see the islands. Pick-up at Vágar Airport. Roads are good, but narrow in the villages — watch out for sheep.",da:"Den mest fleksible måde at se øerne på. Afhentning i Vágar Lufthavn. Vejene er gode, men smalle i bygderne – pas på fårene."}},
   {ico:"🚌", t:{en:"Bus & ferry",da:"Bus & færge"}, p:{en:"Public buses and ferries cover most villages. Our pass gives unlimited bus and ferry rides for your whole trip.",da:"Busser og færger dækker de fleste bygder. Vores kort giver fri kørsel med bus og færge hele rejsen."}},
@@ -1173,11 +1241,11 @@ function scene(c){
     <rect y="222" width="400" height="38" fill="${c.sea}"/>
     <path d="M330 222 L338 170 L346 222Z" fill="${c.m[2]}"/>
   </svg>`;
-  return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+  return `url('data:image/svg+xml;utf8,${encodeURIComponent(svg).replace(/'/g,"%27")}')`;
 }
 // Photos: free Pexels photos (pexels.com/license). For best reliability, download them into an /images folder and use  image:"images/xx.jpg"
 const PHOTO = (id, w=900) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
-const pkgImage = (p, w=900) => p.image ? `url("${p.image}"), ${scene(p.scene)}` : p.photo ? `url("${PHOTO(p.photo,w)}"), ${scene(p.scene)}` : scene(p.scene);
+const pkgImage = (p, w=900) => p.image ? `url('${p.image}'), ${scene(p.scene)}` : p.photo ? `url('${PHOTO(p.photo,w)}'), ${scene(p.scene)}` : scene(p.scene);
 
 /* =========================================================
    PRICE CALCULATION
@@ -1255,11 +1323,14 @@ function renderGrid(){
     list.sort(filter.budget ? (a,b)=>fromPrice(a)-fromPrice(b) : sorts[filter.sort]);
     note = `<div class="empty" style="grid-column:1/-1;padding:16px">${t("relaxed")}</div>`;
   }
+  setTimeout(observeReveal, 0);
   $("#grid").innerHTML = note + list.map(p => {
     const st = byId(STAYS,p.stay), tr = byId(TRANSPORT,p.transport);
-    return `<article class="card">
-      <div class="img" style="background-image:${pkgImage(p)}">
+    return `<article class="card reveal">
+      <div class="img" onclick="openModal('${p.id}')" style="cursor:pointer">
+        <div class="ph" style="background-image:${pkgImage(p)}"></div>
         <span class="badge">${L(p.badge)}</span>
+        <span class="from"><small>${t("card_from")}</small>${fmt(fromPrice(p))}</span>
         <span class="days">${t("days_nights",{d:p.nights+1,n:p.nights})}</span>
       </div>
       <div class="body">
@@ -1270,8 +1341,8 @@ function renderGrid(){
           ${p.extras.slice(0,2).map(id=>`<span>★ ${L(byId(EXTRAS,id).name)}</span>`).join("")}
         </div>
         <div class="foot">
-          <div class="price"><small>${t("card_from")}</small><strong>${fmt(fromPrice(p))}</strong></div>
-          <button class="btn small ghost" onclick="openModal('${p.id}')">${t("card_see")}</button>
+          <span style="font-size:13.5px;color:var(--muted)">${p.months.length ? "📅 "+p.months.map(m=>L(T.months_short)[m-1]).join(", ") : "📅 "+t("ex_all_year")}</span>
+          <button class="btn small" onclick="openModal('${p.id}')">${t("card_see")} →</button>
         </div>
       </div>
     </article>`;
@@ -1282,10 +1353,11 @@ function renderGrid(){
    EXPERIENCES SHOWCASE
    ========================================================= */
 function renderExperiences(){
+  setTimeout(observeReveal, 0);
   $("#expGrid").innerHTML = EXTRAS.filter(e => !e.hideInShowcase).map(e => {
     const added = state.extras.includes(e.id);
     const season = e.months.length ? e.months.map(m => L(T.months_short)[m-1]).join(", ") : t("ex_all_year");
-    return `<div class="exp">
+    return `<div class="exp reveal">
       <div class="pic" style="background-image:${e.photo?`url('${PHOTO(e.photo,600)}')`:"none"}"><div class="ico">${e.ico}</div></div>
       <div class="txt">
       <h3>${L(e.name)}</h3>
@@ -1298,6 +1370,18 @@ function renderExperiences(){
       </div>
     </div>`;
   }).join("");
+}
+
+function pickStyle(st){
+  filter = {...filter, style:st, month:"", budget:0};
+  $("#qsStyle").value = st; renderChips(); renderGrid();
+  document.getElementById("packages").scrollIntoView();
+}
+
+// fade-in on scroll
+const revealObs = ("IntersectionObserver" in window) ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add("in"); revealObs.unobserve(e.target); } }), {threshold:.12}) : null;
+function observeReveal(){
+  document.querySelectorAll(".reveal:not(.in)").forEach(el => revealObs ? revealObs.observe(el) : el.classList.add("in"));
 }
 
 function toggleExtra(id){
@@ -1478,7 +1562,11 @@ function setLang(l){
 
   $("#footTrips").innerHTML = PACKAGES.slice(0,6).map(p=>`<li><a href="#packages" onclick="openModal('${p.id}')">${L(p.title)}</a></li>`).join("");
   $("#faqList").innerHTML = FAQ.map(f=>`<details><summary>${L(f[0])}</summary><p>${L(f[1])}</p></details>`).join("");
-  $("#infoGrid").innerHTML = INFO.map(i=>`<div class="info"><div class="ico">${i.ico}</div><h3>${L(i.t)}</h3><p>${L(i.p)}</p></div>`).join("");
+  $("#mosaic").innerHTML = PLACES.map(pl => `<div class="tile ${pl.cls} reveal" onclick="pickStyle('${pl.filter}')">
+      <div class="ph" style="background-image:url('${PHOTO(pl.photo, pl.cls==="big"?1400:800)}')"></div>
+      <div class="cap"><b>${L(pl.name)}</b><span>${L(pl.text)}</span></div></div>`).join("");
+  $("#statTrips").textContent = PACKAGES.length;
+  $("#infoGrid").innerHTML = INFO.map(i=>`<div class="info reveal"><div class="ico">${i.ico}</div><h3>${L(i.t)}</h3><p>${L(i.p)}</p></div>`).join("");
   $("#seasonGrid").innerHTML = SEASONS.map((s,i)=>`<div class="month"><b>${L(T.months_short)[i]}</b>${s[0]}°C<br>☀ ${s[1]}h
     ${s[2]?'<div class="bar" style="background:#4f7a4a"></div>':""}${s[3]?'<div class="bar" style="background:#d9822b"></div>':""}${s[4]?'<div class="bar" style="background:#1f5677"></div>':""}</div>`).join("");
   if (REVIEWS.length){
@@ -1488,13 +1576,15 @@ function setLang(l){
   $("#contactSummary").textContent = t("sel_empty");
 
   renderChips(); renderGrid(); renderExperiences(); renderBuilderOptions(); updateSummary(); fillModal();
+  observeReveal();
 }
 
 /* =========================================================
    INIT
    ========================================================= */
 function init(){
-  $("#heroBg").style.backgroundImage = `url("${PHOTO(HERO_PHOTO,1920)}"), ` + scene({sky:["#6f93ab","#e2cfb1"], m:["#4d6e60","#34554a","#1d3830"], sea:"#173f57", sun:"#f5d29a"});
+  $("#heroBg").style.backgroundImage = `url('${PHOTO(HERO_PHOTO,1920)}'), ` + scene({sky:["#6f93ab","#e2cfb1"], m:["#4d6e60","#34554a","#1d3830"], sea:"#173f57", sun:"#f5d29a"});
+  $("#whySec").style.backgroundImage = `url('${PHOTO(32315716,1600)}')`;
   $("#year").textContent = new Date().getFullYear();
   $("#mailLink").href = "mailto:"+BOOKING_EMAIL; $("#mailLink").textContent = BOOKING_EMAIL;
   $("#footMail").textContent = BOOKING_EMAIL; $("#phoneText").textContent = PHONE; $("#footPhone").textContent = PHONE;
